@@ -1,0 +1,30 @@
+<div id="app" data-title='{{title}}'>
+  <label>Add new todo</label>
+  <input v-model="newTodo" @keyup.enter="addTodo">
+  <br><br>
+
+  <table>
+
+    <tr v-for="todo in todos">
+      <td>{{todo.title.split('').reverse().join('') + '!'}}</td>
+      <td>
+        <span @dblclick="editTodo = todo" v-show="todo != editTodo" >{{todo.title}}</span>
+        <input
+            type="text"
+            v-show="todo == editTodo"
+            @keyup.enter="editTodo = null"
+            v-model="editTodo.title"
+        />
+
+      </td>
+      <td><input type="checkbox" selected="{{todo.status}}" v-model="todo.status"/></td>
+      <td>
+          <template  v-if="!todo.status">
+            <button @click="reverseTitle($index)">Reverse title</button>
+            <button @click="removeTodo(todo)">delete</button>
+      </template>
+      </td>
+    </tr>
+
+  </table>
+</div>
